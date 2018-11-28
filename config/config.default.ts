@@ -15,6 +15,12 @@ export default (appInfo: EggAppInfo) => {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
 
+  config.redis = {
+    clients: {
+      one: { port: 6380, host: '94.191.5.88', password: 'zheng', db: 0 },
+      two: { port: 6381, host: '94.191.5.88', password: null, db: 1 },
+    },
+  };
   // the return config will combines to EggAppConfig
   return {
     ...config,
