@@ -1,5 +1,5 @@
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
-
+import * as path from 'path';
 export default (appInfo: EggAppInfo) => {
   const config = {} as PowerPartial<EggAppConfig>;
 
@@ -14,11 +14,128 @@ export default (appInfo: EggAppInfo) => {
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
+  config.logger = {
+    appLogName: `${appInfo.name}.log`,
+    coreLogName: 'webrail.log',
+    agentLogName: 'agent.log',
+    errorLogName: 'error.log',
+    encoding: 'utf-8',
+    level: 'INFO',
+    consoleLevel: 'INFO',
+    disableConsoleAfterReady: true,
+  };
+
+  config.customLogger = {
+    commonLogger: {
+      file: path.join(appInfo.root, 'logs', 'zheng.log'),
+      formatter: message => {
+        return `### ${JSON.stringify(message)}`;
+      },
+    },
+  };
+
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
 
   config.redis = {
     clients: {
-      one: { port: 6380, host: '94.191.5.88', password: 'zheng', db: 0 },
-      two: { port: 6381, host: '94.191.5.88', password: null, db: 1 },
+      client1: {
+        cluster: true,
+        nodes: [
+          {
+            host: '94.191.5.88',
+            port: '7001',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7002',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7003',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7004',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7005',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7006',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+        ],
+      },
+      client2: {
+        cluster: true,
+        nodes: [
+          {
+            host: '94.191.5.88',
+            port: '7001',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7002',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7003',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7004',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7005',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+          {
+            host: '94.191.5.88',
+            port: '7006',
+            family: 'user',
+            password: null,
+            db: 'db0',
+          },
+        ],
+      },
     },
   };
   // the return config will combines to EggAppConfig

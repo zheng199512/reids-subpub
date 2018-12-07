@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+  <script src="./jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+  <form action="/formData" method="POST" enctype="multipart/form-data" id="form">
+    <input type="text" name="username" />
+    <input type="file" name="file" id="file" />
+    <input type="button" value="提交" id="submit" />
+  </form>
+</body>
+<script>
+  $('#submit').click(function () {
+    var formData = new FormData();
+    formData.append('file', $('#file')[0].files[0]);
+    console.log(formData);
+    $.ajax({
+      url: '/formData',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (data) {
+        console.log(data);
+      },
+    });
+  });
+</script>
+
+</html>
